@@ -25,8 +25,8 @@ class LRY:
     # 随机课程时间
     def randomTime(self):
         # 以下参数非必要勿改
-        video_start_time = 4  # 视频时长随机范围（分钟）建议4~7分钟
-        video_end_time = 7
+        video_start_time = int(self.config.get("Config",'start_time'))  # 视频时长随机范围（分钟）建议4~7分钟
+        video_end_time = int(self.config.get("Config",'end_time'))
         return random.randint(60 * video_start_time, 60 * video_end_time)
 
     # 文本格式归一化，方便搜题
@@ -36,7 +36,6 @@ class LRY:
                       replace("_", '').replace("-", '').replace(",", '').\
                      replace("。", '').replace('\t', '').replace('n', '').replace('\"','').\
                     replace("\xa0","").replace(" ","").replace("\\",'')
-
         return formatStr
 
     # 初始化题库
