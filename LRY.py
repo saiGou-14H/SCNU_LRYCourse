@@ -273,7 +273,7 @@ class LRY:
                 index = self.题库.index(item)
                 # 标题附近寻找 （题库有点乱，不整理了就这样了）
                 for ans in question['answer']:
-                    for add in range(5):
+                    for add in range(10):
                         if self.题库[index + add].__contains__(ans):
                             ans_index = question['answer'].index(ans)
         return ans_index
