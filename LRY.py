@@ -189,7 +189,7 @@ class LRY:
         read_time = int(chapter_rtime.replace("分钟", '').split('.')[0]) * 60 + int(
             chapter_rtime.replace("分钟", '').split('.')[1]) \
             if chapter_rtime.__contains__('分钟') else 0
-
+        data[0]['args']['total'] = int(total)
         print('[{}]章节总时长：{}s ,观看时长：{}s ,学习进度：{} ,是否完成：{}.'.format(chapter_name,total,read_time,chapter_progress,chapter_isflish))
 
         # 视频接口请求
@@ -337,4 +337,3 @@ if __name__ == '__main__':
                     print("非法输入！")
                     break
     input("结束使用:")
-
