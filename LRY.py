@@ -133,13 +133,13 @@ class LRY:
         a = html.xpath('//div[@class="logininfo"]//a')
         sesskey = a[1].get('href').split('=')[1]
         video_list = []
-        _video = etree.HTML(etree.tostring(html.xpath('//tbody')[0]))
 
         status = html.xpath('//div[@class="no-overflow mt-5"][1]//td')
+
         index = 0
         for item in html.xpath('//div[@class="no-overflow mt-5"][1]//td//a'):
             state = []
-            for j in range(8):
+            for j in range(7):
                 state.append(status[index].text)
                 index=index+1
             state[1] = [item.text, item.get('href').split('=')[1]]
@@ -174,12 +174,11 @@ class LRY:
         data = [{"index": 0, "methodname": "report_h5pstats_set_time",
                  "args": {"time": 30, "finish": 1, "cmid": "0", "total": 300, "progress": "100"}}]
         data[0]['args']['cmid'] = str(video_item[1][1])
-
         chapter_name = video_item[1][0]
         chapter_time = video_item[2]
         chapter_rtime = video_item[3]
         chapter_progress = video_item[4]
-        chapter_isflish = True if video_item[5]=="是的" else False
+        chapter_isflish = True if video_item[5]=="已完成" else False
 
         self.REQ.get('https://moodle.scnu.edu.cn/mod/h5pactivity/view.php?id={}'.format(video_item[1][1]),headers=self.header)
 
@@ -267,16 +266,16 @@ class LRY:
 
 
     def getAnswer(self,question):
-        ans_index = -1
         for item in self.题库:
             if item.__contains__(question['question']) or question['question'].__contains__(item):
                 index = self.题库.index(item)
                 # 标题附近寻找 （题库有点乱，不整理了就这样了）
                 for ans in question['answer']:
                     for add in range(10):
-                        if self.题库[index + add].__contains__(ans):
+                        if index + add< len(self.题库) and self.题库[index + add].__contains__(ans):
                             ans_index = question['answer'].index(ans)
-        return ans_index
+                            return ans_index
+        return -1
 
 if __name__ == '__main__':
     lry = LRY()
@@ -333,7 +332,7 @@ if __name__ == '__main__':
                         idx = int(isG) - 1
                     else:
                         print("不存在该测验，请重新输入:")
-                except:
+                except Exception as e:
                     print("非法输入！")
                     break
     input("结束使用:")
