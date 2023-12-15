@@ -1,6 +1,6 @@
 # LRYCourse
 
-华南师范大学
+SCNU
 
 励儒云：https://moodle.scnu.edu.cn/
 
